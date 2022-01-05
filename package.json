@@ -2,6 +2,9 @@
   "name": "yukai-api-project",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.13.0"
+  },
   "scripts": {
     "start": "node server",
     "dev": "npm run serve && nodemon server",
