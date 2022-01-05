@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import env from '../env';
+
 import greenCheekMotion from '../data/yellow-green-go';
 import redCheekMotion from '../data/red-stop';
 
