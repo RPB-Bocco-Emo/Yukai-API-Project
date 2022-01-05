@@ -1,17 +1,80 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+	<img src="./assets/image_bocco_emo_branch_page.png" />
+    <h1>Let's play Red Light/Green Light </h1>
+    <button id="start" v-on:click="beginMotion">Start</button>
+    <button id="finish" v-on:click="finishMotion">Finish</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import env from '../env';
+import testMotion from '../data/emo-motion-test';
+import startMotion from '../data/solid-green';
+import stopMotion from '../data/solid-red';
+import test from '../data/test-motion';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data: () => ({
+    base_url: 'https://platform-api.bocco.me',
+    refreshKey: env.REFRESH_KEY,
+    accessToken: '',
+    roomId: env.ROOM_ID,
+    motion: testMotion,
+    startMotion: startMotion,
+    stopMotion: stopMotion,
+    test: test
+  }),
+  methods: {
+    getAccessToken: async function(){
+      const getToken = await fetch(`${this.base_url}/oauth/token/refresh`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"refresh_token": this.refreshKey})
+      })
+      const tokenJSON = await getToken.json();
+      this.accessToken = tokenJSON.access_token;
+      console.log(this.accessToken);
+    },
+    // startMotion: async function() {
+    //   await this.getAccessToken();
+    //   console.log(this.accessToken);
+    //   await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
+    //     method: 'POST',
+    //     headers: {
+    //       'Authorization': 'Bearer ' + this.accessToken ,
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(this.motion)
+    //   });
+    // },
+    beginMotion: async function() {
+      await this.getAccessToken();
+      console.log(this.accessToken);
+      await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + this.accessToken ,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.test)
+      });
+    },
+    finishMotion: async function() {
+      await this.getAccessToken();
+      console.log(this.accessToken);
+      await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + this.accessToken ,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.stopMotion)
+      });
+    }
   }
 }
 </script>
@@ -24,5 +87,129 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#start {
+	cursor: pointer;
+	position: relative;
+	padding: 2.5rem 1.8rem;
+	border-radius: 3.75rem;
+  margin-right: 30px;
+	line-height: 2.5rem;
+	font-size: 2rem;
+	font-weight: 600;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191,
+    1px 3px 1px #919191;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+	
+	border: 1px solid white;
+	background-image: linear-gradient(-180deg, lightgreen 0%, green 100%);
+	box-shadow: 0 1rem 1.25rem 0 lightgray
+							0 -0.25rem 1.5rem darkgreen inset,
+							0 0.75rem 0.5rem rgba(255,255,255, 0.4) inset,
+							0 0.25rem 0.5rem 0 green inset;
+}
+
+#start span {
+	color: transparent;
+	background-image: linear-gradient(0deg, lightgreen 0%, #FEFAFD 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	filter: drop-shadow(0 2px 2px darkgreen(290, 100%, 20%, 1));
+}
+
+#start::before {
+	content: "";
+	display: block;
+	height: 0.25rem;
+	position: absolute;
+	top: 0.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 7.5rem);
+	background: #fff;
+	border-radius: 100%;
+	
+	opacity: 0.7;
+	background-image: linear-gradient(-270deg, rgba(255,255,255,0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255,255,255,0.00) 100%);
+}
+
+#start::after {
+	content: "";
+	display: block;
+	height: 0.25rem;
+	position: absolute;
+	bottom: 0.75rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 7.5rem);
+	background: #fff;
+	border-radius: 100%;
+	
+	filter: blur(1px);
+	opacity: 0.05;
+	background-image: linear-gradient(-270deg, rgba(255,255,255,0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255,255,255,0.00) 100%);
+}
+
+#finish {
+	cursor: pointer;
+	position: relative;
+	padding: 2.5rem 1.4rem;
+	border-radius: 3.75rem;
+	line-height: 2.5rem;
+	font-size: 2rem;
+	font-weight: 600;
+  color: #f5f5f5;
+  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191,
+        1px 3px 1px #919191;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+	border: 1px solid white;
+	background-image: linear-gradient(-180deg, tomato, red 100%);
+	box-shadow: 0 1rem 1.25rem 0 lightgray(22,75,195,0.50),
+							0 -0.25rem 1.5rem darkred(110, 15, 155, 1) inset,
+							0 0.75rem 0.5rem rgba(255,255,255, 0.4) inset,
+							0 0.25rem 0.5rem 0 red(180, 70, 207, 1) inset;
+}
+
+#finish span {
+	color: transparent;
+	background-image: linear-gradient(0deg, tomato 0%, white 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	filter: drop-shadow(0 2px 2px hsla(290, 100%, 20%, 1));
+}
+
+#finish::before {
+	content: "";
+	display: block;
+	height: 0.25rem;
+	position: absolute;
+	top: 0.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 7.5rem);
+	background: #fff;
+	border-radius: 100%;
+	
+	opacity: 0.7;
+	background-image: linear-gradient(-270deg, rgba(255,255,255,0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255,255,255,0.00) 100%);
+}
+
+#finish::after {
+	content: "";
+	display: block;
+	height: 0.25rem;
+	position: absolute;
+	bottom: 0.75rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(100% - 7.5rem);
+	background: #fff;
+	border-radius: 100%;
+	
+	filter: blur(1px);
+	opacity: 0.05;
+	background-image: linear-gradient(-270deg, rgba(255,255,255,0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255,255,255,0.00) 100%);
 }
 </style>
