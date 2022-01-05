@@ -23,9 +23,9 @@ export default {
   name: 'App',
   data: () => ({
     base_url: 'https://platform-api.bocco.me',
-    refreshKey: env.REFRESH_KEY || process.env.REFRESH_KEY,
+    refreshKey: process.env.REFRESH_KEY || env.REFRESH_KEY,
     accessToken: '',
-    roomId: env.ROOM_ID || process.env.ROOM_ID,
+    roomId: process.env.ROOM_ID || env.ROOM_ID,
     intervalId: '',
     flag: false,
     greenCheekMotion: greenCheekMotion,
