@@ -1,30 +1,35 @@
 <template>
   <div id="app">
 	<img src="./assets/image_bocco_emo_branch_page.png" />
-    <h1>Let's play Red Light/Green Light </h1>
-    <button id="start" v-on:click="beginMotion">Start</button>
-    <button id="finish" v-on:click="finishMotion">Finish</button>
+    <h1>Let's play Red Light/Green Light! </h1>
+    <button id="start" v-on:click="beginMotion">START</button>
+    <button id="finish" v-on:click="finishMotion">FINISH</button>
+	<ol>
+		<li> Press the START button to start the game </li>
+		<li> Get set when emo-chan's cheeks are flashing <mark class="ye"> yellow</mark> </li> 
+		<li> Run on <mark class="green"> green </mark> until emo-chan's cheeks turn <mark class="red"> red </mark> </li>
+		<li> The next round starts automatically </li>
+		<li> Press the STOP button when you want to end the game. </li>
+	</ol>
   </div>
 </template>
 
 <script>
 import env from '../env';
-import testMotion from '../data/emo-motion-test';
-import startMotion from '../data/solid-green';
-import stopMotion from '../data/solid-red';
-import test from '../data/test-motion';
+import greenCheekMotion from '../data/yellow-green-go';
+import redCheekMotion from '../data/red-stop';
 
 export default {
   name: 'App',
   data: () => ({
     base_url: 'https://platform-api.bocco.me',
-    refreshKey: env.REFRESH_KEY,
+    refreshKey: env.REFRESH_KEY || process.env.REFRESH_KEY,
     accessToken: '',
-    roomId: env.ROOM_ID,
-    motion: testMotion,
-    startMotion: startMotion,
-    stopMotion: stopMotion,
-    test: test
+    roomId: env.ROOM_ID || process.env.ROOM_ID,
+    intervalId: '',
+    flag: false,
+    greenCheekMotion: greenCheekMotion,
+    redCheekMotion: redCheekMotion
   }),
   methods: {
     getAccessToken: async function(){
@@ -37,43 +42,45 @@ export default {
       })
       const tokenJSON = await getToken.json();
       this.accessToken = tokenJSON.access_token;
-      console.log(this.accessToken);
     },
-    // startMotion: async function() {
-    //   await this.getAccessToken();
-    //   console.log(this.accessToken);
-    //   await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
-    //     method: 'POST',
-    //     headers: {
-    //       'Authorization': 'Bearer ' + this.accessToken ,
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(this.motion)
-    //   });
-    // },
-    beginMotion: async function() {
+    postGreenCheekMotion: async function() {
       await this.getAccessToken();
-      console.log(this.accessToken);
       await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + this.accessToken ,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(this.test)
+        body: JSON.stringify(this.greenCheekMotion)
       });
+    },
+    postRedCheekMotion: async function() {
+      await this.getAccessToken();
+      await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + this.accessToken ,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.redCheekMotion)
+      });
+    },
+    beginMotion: async function() {
+      await this.postGreenCheekMotion();
+      await this.postRedCheekMotion();
+      console.log('First emotion!');
+
+      if(this.intervalId == '') {
+        this.intervalId = setInterval(async () => {
+          console.log(this.intervalId);
+          await this.postGreenCheekMotion();
+          await this.postRedCheekMotion();
+        }, 13000)
+      }
     },
     finishMotion: async function() {
-      await this.getAccessToken();
-      console.log(this.accessToken);
-      await fetch(`${this.base_url}/v1/rooms/${this.roomId}/motions`,{
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + this.accessToken ,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.stopMotion)
-      });
+      clearInterval(this.intervalId);
+      this.intervalId = '';
     }
   }
 }
@@ -86,7 +93,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right:30px;
 }
 
 #start {
@@ -211,5 +221,31 @@ export default {
 	filter: blur(1px);
 	opacity: 0.05;
 	background-image: linear-gradient(-270deg, rgba(255,255,255,0.00) 0%, #FFFFFF 20%, #FFFFFF 80%, rgba(255,255,255,0.00) 100%);
+}
+
+ol{
+  text-align: center;
+  list-style-position: inside;
+}
+li{
+ line-height: 2.2;
+ font-size: 11;
+ 
+}
+
+mark{
+ background-color: white;
+ font-weight: bolder;
+}
+mark.red{
+ color: red
+}
+
+mark.yellow{
+ color: yellow
+}
+
+mark.green{
+ color: green
 }
 </style>
