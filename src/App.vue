@@ -2,11 +2,13 @@
   <div id="app">
 	<img src="./assets/image_bocco_emo_branch_page.png" />
     <h1>Let's play Red Light/Green Light!</h1>
-    <button id="start" v-on:click="beginMotion">START</button>
-    <button id="finish" v-on:click="finishMotion">FINISH</button>
+	<div class="buttonContainer">
+	<button id="start" v-on:click="beginMotion">START</button>
+	<button id="finish" v-on:click="finishMotion">FINISH</button>
+	</div>
 	<ol>
 		<li> Press the START button to start the game </li>
-		<li> Get set when emo-chan's cheeks are flashing <mark class="ye"> yellow</mark> </li> 
+		<li> Get set when emo-chan's cheeks are flashing <mark class="yellow"> yellow</mark> </li> 
 		<li> Run on <mark class="green"> green </mark> until emo-chan's cheeks turn <mark class="red"> red </mark> </li>
 		<li> The next round starts automatically </li>
 		<li> Press the STOP button when you want to end the game. </li>
@@ -110,6 +112,12 @@ export default {
   margin-bottom: 20px;
   margin-left: 30px;
   margin-right:30px;
+  min-width: 585px;
+}
+
+.buttonContainer{
+  display: inline-block;
+  align-content: center;
 }
 
 #start {
@@ -117,7 +125,6 @@ export default {
 	position: relative;
 	padding: 2.5rem 1.8rem;
 	border-radius: 3.75rem;
-  margin-right: 30px;
 	line-height: 2.5rem;
 	font-size: 2rem;
 	font-weight: 600;
@@ -255,7 +262,7 @@ mark.red{
 }
 
 mark.yellow{
- color: yellow
+ color: rgb(245,199,26)
 }
 
 mark.green{

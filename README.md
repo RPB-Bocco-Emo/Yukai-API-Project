@@ -1,5 +1,12 @@
 # yukai-api-project
 
+<!-- TODO: Add explanation from presentation -->
+
+Production:
+https://yukai-api-rpb.herokuapp.com/
+
+
+
 ## Project setup
 ```
 npm install
@@ -7,8 +14,19 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
+npm run dev
+```
+
+Compiles and hot-reloads for Vue
+```
 npm run serve
 ```
+
+Start Express Server
+```
+npm run start
+```
+
 
 ### Compiles and minifies for production
 ```
