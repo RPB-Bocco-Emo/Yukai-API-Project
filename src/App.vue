@@ -11,7 +11,7 @@
 		<li> Get set when emo-chan's cheeks are flashing <mark class="yellow"> yellow</mark> </li> 
 		<li> Run on <mark class="green"> green </mark> until emo-chan's cheeks turn <mark class="red"> red </mark> </li>
 		<li> The next round starts automatically </li>
-		<li> Press the STOP button when you want to end the game. </li>
+		<li> Press the FINISH button when you want to end the game. </li>
 	</ol>
   </div>
 </template>
@@ -69,16 +69,12 @@ export default {
     },
     beginMotion: async function() {
 	await this.playMessage('だるまさんがころんだ、はじめるよ。まわりにきをつけてあそんでね。スリー、ツー、ワン。');
-      await this.postGreenCheekMotion();
-      await this.postRedCheekMotion();
-      console.log('First emotion!');
-
       if(this.intervalId == '') {
         this.intervalId = setInterval(async () => {
           console.log(this.intervalId);
           await this.postGreenCheekMotion();
           await this.postRedCheekMotion();
-        }, 13000)
+        }, 16000);
       }
     },
     finishMotion: async function() {
@@ -108,22 +104,29 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 30px;
-  margin-right:30px;
-  min-width: 585px;
-}
-
-.buttonContainer{
-  display: inline-block;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
   align-content: center;
+  justify-content: center;
+}
+h1{
+  font-size: max(5.5vw, 18px)
+}
+.buttonContainer{
+  min-width: 50%;
+  display: inline-block;
 }
 
 #start {
+	margin-right:3%;
+	margin-left:3%;
+	margin-top:1%;
+	margin-bottom:1%;
 	cursor: pointer;
 	position: relative;
-	padding: 2.5rem 1.8rem;
+	padding: 2.5rem 2.1rem;
 	border-radius: 3.75rem;
 	line-height: 2.5rem;
 	font-size: 2rem;
@@ -185,7 +188,11 @@ export default {
 #finish {
 	cursor: pointer;
 	position: relative;
-	padding: 2.5rem 1.4rem;
+	padding: 2.5rem 1.8rem;
+	margin-left: 3%;
+	margin-right:3%;
+	margin-top:1%;
+	margin-bottom:1%;
 	border-radius: 3.75rem;
 	line-height: 2.5rem;
 	font-size: 2rem;
@@ -244,12 +251,15 @@ export default {
 }
 
 ol{
+  padding-left: 0;
+  margin-left: 0;
+  margin-right: 0;
   text-align: center;
   list-style-position: inside;
 }
 li{
  line-height: 2.2;
- font-size: 11;
+ font-size: max(2.5vw, 11px);
  
 }
 
