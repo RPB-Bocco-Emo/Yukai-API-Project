@@ -66,6 +66,7 @@ export default {
       });
     },
     beginMotion: async function() {
+	await this.playMessage('だるまさんがころんだ、はじめるよ');
       await this.postGreenCheekMotion();
       await this.postRedCheekMotion();
       console.log('First emotion!');
@@ -81,8 +82,20 @@ export default {
     finishMotion: async function() {
       clearInterval(this.intervalId);
       this.intervalId = '';
-    }
+      this.playMessage('おつかれさまです')
+    },
+	playMessage: async function(messageText){
+    await this.getAccessToken();
+    await fetch(`${this.base_url}/v1/rooms/${this.roomId}/messages/text`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + this.accessToken, 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({text: messageText})
+	})
   }
+}
 }
 </script>
 
