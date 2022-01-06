@@ -112,7 +112,7 @@ export default {
   justify-content: center;
 }
 h1{
-  font-size: max(5.5vw, 18px)
+  font-size: max(3.2vw, 18px)
 }
 .buttonContainer{
   min-width: 50%;
@@ -259,7 +259,7 @@ ol{
 }
 li{
  line-height: 2.2;
- font-size: max(2.5vw, 11px);
+ font-size: max(1.5vw, 11px);
  
 }
 
