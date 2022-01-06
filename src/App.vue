@@ -66,7 +66,7 @@ export default {
       });
     },
     beginMotion: async function() {
-	await this.playMessage('だるまさんがころんだ、はじめるよ');
+	await this.playMessage('だるまさんがころんだ、はじめるよ。まわりにきをつけてあそんでね。スリー、ツー、ワン。');
       await this.postGreenCheekMotion();
       await this.postRedCheekMotion();
       console.log('First emotion!');
@@ -82,7 +82,7 @@ export default {
     finishMotion: async function() {
       clearInterval(this.intervalId);
       this.intervalId = '';
-      this.playMessage('おつかれさまです')
+      this.playMessage('ゲームがおわったよ。みんなでハイタッチしよう')
     },
 	playMessage: async function(messageText){
     await this.getAccessToken();
