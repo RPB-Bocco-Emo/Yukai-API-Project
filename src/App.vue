@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 	<img src="./assets/image_bocco_emo_branch_page.png" />
-    <h1>Let's play Red Light/Green Light! </h1>
+    <h1>Let's play Red Light/Green Light!</h1>
     <button id="start" v-on:click="beginMotion">START</button>
     <button id="finish" v-on:click="finishMotion">FINISH</button>
 	<ol>
@@ -23,13 +23,13 @@ export default {
   name: 'App',
   data: () => ({
     base_url: 'https://platform-api.bocco.me',
-    refreshKey: process.env.REFRESH_KEY,
+    refreshKey: process.env.VUE_APP_REFRESH_KEY,
     accessToken: '',
-    roomId: process.env.ROOM_ID,
+    roomId: process.env.VUE_APP_ROOM_ID,
     intervalId: '',
     flag: false,
     greenCheekMotion: greenCheekMotion,
-    redCheekMotion: redCheekMotion
+    redCheekMotion: redCheekMotion,
   }),
   methods: {
     getAccessToken: async function(){
