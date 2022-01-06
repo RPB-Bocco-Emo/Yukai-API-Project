@@ -1,14 +1,24 @@
-# yukai-api-project
+“This was developed during my time as a student at Code Chrysalis” 
 
-<!-- TODO: Add explanation from presentation -->
+# yukai-api-project
+Make family time more fun! Play red light/green light with emo-chan! 
 
 Production:
 https://yukai-api-rpb.herokuapp.com/
 
-
-
 ## Project setup
+
+### Installing
+To run this application locally, you will need Git and Node.js installed on your computer.
+
 ```
+# clone this repo
+$ git clone git@github.com:richardpbCC/Yukai-API-Project.git
+
+# change directory to this repo
+$ cd Yukai-API-Project
+
+# install dependencies
 npm install
 ```
 
@@ -27,7 +37,6 @@ Start Express Server
 npm run start
 ```
 
-
 ### Compiles and minifies for production
 ```
 npm run build
@@ -38,5 +47,5 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Authors
+Code Chrysalis Richard, Brian, Maho(Paddy)
